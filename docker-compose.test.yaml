@@ -2,11 +2,11 @@
 # that test output is saved to the host
 
 services:
-  ffc-template-node:
+  fcp-fd-file-retriever:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-test
+    image: fcp-fd-file-retriever-development
+    container_name: fcp-fd-file-retriever-test
     command: npm run test
     volumes:
       - ./app:/home/node/app
