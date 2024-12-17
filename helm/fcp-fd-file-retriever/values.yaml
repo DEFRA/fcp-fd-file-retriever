@@ -10,9 +10,12 @@ appInsights:
 
 labels: {}
 
-containerConfigMap: {}
+containerConfigMap:
+  name: fcp-fd-file-retriever-config-map
 
-containerSecret: {}
+containerSecret:
+  name: fcp-fd-file-retriever-container-secret
+  type: Opaque
 
 deployment: {}
 
@@ -38,7 +41,6 @@ readinessProbe:
   failureThreshold: 3
   timeoutSeconds: 5
 
-# Enable if Managed Identity is required, ensure the clientID and resourceID are set in Platform Configuration
 azureIdentity:
   enabled: false
   clientID: not-a-real-clientID
