@@ -1,4 +1,3 @@
-# Required values to support CI pipeline
 environment: production
 environmentCode:
 name: fcp-fd-file-retriever
