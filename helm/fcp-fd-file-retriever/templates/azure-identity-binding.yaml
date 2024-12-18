@@ -1,4 +1,4 @@
-{{- if .Values.azureIdentity.enabled }}
+{{- if .Values.usePodIdentity }}
 {{- include "ffc-helm-library.azure-identity-binding" (list . "fcp-fd-file-retriever.azure-identity-binding") -}}
 {{- end }}
 {{- define "fcp-fd-file-retriever.azure-identity-binding" -}}
