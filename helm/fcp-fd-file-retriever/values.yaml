@@ -42,5 +42,6 @@ readinessProbe:
   timeoutSeconds: 5
 
 azureIdentity:
+  enabled: true
   clientID: not-a-real-clientID
   resourceID: not-a-real-resourceID
