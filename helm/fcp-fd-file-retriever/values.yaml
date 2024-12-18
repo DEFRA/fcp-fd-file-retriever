@@ -19,7 +19,7 @@ containerSecret:
 
 deployment: {}
 
-port: &port 3000
+port: &port 3042
 
 container:
   resourceTier: M
