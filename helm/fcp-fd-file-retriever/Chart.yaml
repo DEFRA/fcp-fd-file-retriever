@@ -1,9 +1,9 @@
 apiVersion: v2
-description: description-of-project-goes-here
-name: ffc-template-node
+description: File retrieval service for Single Front Door
+name: fcp-fd-file-retriever
 # this version is automatically updated in the build pipeline
 version: 1.0.0
 dependencies:
 - name: ffc-helm-library
-  version: 4.2.0
+  version: 4.6.0
   repository: https://raw.githubusercontent.com/defra/ffc-helm-repository/master/

@@ -1,23 +1,25 @@
-# Required values to support CI pipeline
 environment: production
 environmentCode:
-name: ffc-template-node
-namespace: ffc-demo
-workstream: ffc-demo
-image: ffc-template-node
+name: fcp-fd-file-retriever
+namespace: fcp-fd
+workstream: fcp-fd
+image: fcp-fd-file-retriever
 
 appInsights:
   connectionString:
 
 labels: {}
 
-containerConfigMap: {}
+containerConfigMap:
+  name: fcp-fd-file-retriever-config-map
 
-containerSecret: {}
+containerSecret:
+  name: fcp-fd-file-retriever-container-secret
+  type: Opaque
 
 deployment: {}
 
-port: &port 3000
+port: &port 3042
 
 container:
   resourceTier: M
@@ -39,8 +41,6 @@ readinessProbe:
   failureThreshold: 3
   timeoutSeconds: 5
 
-# Enable if Managed Identity is required, ensure the clientID and resourceID are set in Platform Configuration
 azureIdentity:
-  enabled: false
   clientID: not-a-real-clientID
   resourceID: not-a-real-resourceID
