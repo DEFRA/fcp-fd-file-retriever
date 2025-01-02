@@ -32,6 +32,8 @@ services:
 
   fcp-fd-file-retriever-azurite:
     container_name: fcp-fd-file-retriever-azurite-development
+    networks:
+      - fcp-fd-file-retriever
     environment:
       AZURITE_ACCOUNTS: >
         ${DMZ_STORAGE_ACCOUNT_NAME:-dmz}:${AZURITE_ACCESS_KEY:-test};${CLN_STORAGE_ACCOUNT_NAME:-cln}:${AZURITE_ACCESS_KEY:-test};${MAL_STORAGE_ACCOUNT_NAME:-mal}:${AZURITE_ACCESS_KEY:-test}
