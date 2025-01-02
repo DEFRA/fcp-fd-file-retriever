@@ -1,8 +1,19 @@
 import { setup } from './insights.js'
 import 'log-timestamp'
+
 import { createServer } from './server.js'
 
+import { createDmzContainers } from './storage/blob/dmz.js'
+import { createCleanContainers } from './storage/blob/clean.js'
+import { createMalContainers } from './storage/blob/malicious.js'
+
 const init = async () => {
+  if (process.env.NODE_ENV === 'development') {
+    await createDmzContainers()
+    await createCleanContainers()
+    await createMalContainers()
+  }
+
   const server = await createServer()
   await server.start()
   console.log('Server running on %s', server.info.uri)
