@@ -1,0 +1,60 @@
+openapi: 3.0.0
+
+info:
+  title: Single Front Door (SFD) File Retriever
+  version: 1.0.0
+  description: Handles file retrieval for the fcp-fd-file-retriever microservice.
+
+paths: 
+  /object/{path}:
+    get:
+      tags:
+        - Object
+      summary: Retrieve a file
+      description: Accepts file retrieval requests via HTTP using path parameters.
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The UUID of the file to be retrieved.
+      responses:
+        '200':
+          description: File retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  path: 
+                    type: string
+                    format: binary
+                    description: The retrieved file.
+        '400':
+          description: File retrieval request is invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "File download failed."
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example:
+                        - Property 'path' is required.
+        '404':
+          description: File not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "File not found."
