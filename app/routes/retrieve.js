@@ -1,12 +1,12 @@
+import { handleFileRetrieval } from '../services/retrieve.js'
 import { MALICIOUS_FILE } from '../constants/av-results.js'
-import { retrieveFile } from '../services/retrieve.js'
 
 const retrieve = {
   method: 'GET',
   path: '/object/{path}',
   handler: async (request, h) => {
     const { path } = request.params
-    const [file, err] = await retrieveFile(path)
+    const [file, err] = await handleFileRetrieval(path)
 
     if (err) {
       if (err.cause === MALICIOUS_FILE) {
