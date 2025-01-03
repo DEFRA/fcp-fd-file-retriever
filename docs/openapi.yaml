@@ -48,6 +48,16 @@ paths:
                       type: string
                       example:
                         - Property 'path' is required.
+        '403':
+          description: AV scan failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "AV scan failed."
         '404':
           description: File not found.
           content:
