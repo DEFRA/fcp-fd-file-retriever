@@ -1,19 +1,21 @@
 import { MALICIOUS_FILE } from '../constants/av-results.js'
 
 import * as cleanRepo from '../repos/clean.js'
+import * as maliciousRepo from '../repos/malicious.js'
 
-const handleFileRetrieval = async (id) => {
+const handleFileRetrieval = async (path) => {
+  let file
+
   try {
-    const file = await cleanRepo.getObject(id)
-    console.logconsole.log(`File ${id} retrieved from clean storage.`)
+    file = await cleanRepo.getObject(path)
+    console.log(`File ${path} retrieved from clean storage.`)
     return [file, null]
   } catch (err) {
     if (err.cause === MALICIOUS_FILE) {
-      console.warn(`Requested file ${id} has been identified as malicious.`)
-      return [null, err]
+      console.warn(`Requested file ${path} has been identified as malicious. Moving to quarantine.`)
+      await maliciousRepo.quarantineObject(file, path)
     }
 
-    console.error(`An error occurred while retrieving file ${id}:`, err)
     return [null, err]
   }
 }

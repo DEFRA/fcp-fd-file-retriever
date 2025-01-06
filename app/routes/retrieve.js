@@ -1,9 +1,10 @@
 import { handleFileRetrieval } from '../services/retrieve.js'
 import { MALICIOUS_FILE } from '../constants/av-results.js'
+import { FILE_NOT_FOUND } from '../constants/file-errors.js'
 
 const retrieve = {
   method: 'GET',
-  path: '/object/{path}',
+  path: '/objects/{path}',
   handler: async (request, h) => {
     const { path } = request.params
     const [file, err] = await handleFileRetrieval(path)
@@ -13,6 +14,10 @@ const retrieve = {
         return h.response({
           errors: ['Requested file has been identified as malicious.']
         }).code(403)
+      }
+
+      if (err.cause === FILE_NOT_FOUND) {
+        return h.response().code(404)
       }
 
       throw err

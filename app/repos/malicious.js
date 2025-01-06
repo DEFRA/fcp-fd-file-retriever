@@ -1,5 +1,5 @@
-import { containers } from '../../storage/blob/malicious.js'
-import { uploadBlob } from '../../storage/blob/common.js'
+import { containers } from '../storage/blob/malicious.js'
+import { uploadBlob } from '../storage/blob/common.js'
 
 const { objects: quarantinedObjects } = containers
 
