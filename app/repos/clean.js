@@ -6,10 +6,12 @@ const { objects: cleanObjects } = containers
 const getObject = async (path) => {
   const blob = cleanObjects.getBlockBlobClient(path)
   try {
-    return blob.downloadToBuffer()
+    return await blob.downloadToBuffer()
   } catch (err) {
     if (err.statusCode === 404) {
-      throw new Error('Requested file not found', { cause: FILE_NOT_FOUND })
+      const error = new Error('Requested file not found')
+      error.cause = FILE_NOT_FOUND
+      throw error
     }
 
     throw err
