@@ -2,6 +2,8 @@ import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 import { MALICIOUS_FILE } from '../../../app/constants/av-results.js'
 
+import { pdf } from '../../mocks/files'
+
 jest.setTimeout(30000)
 
 jest.unstable_mockModule('../../../app/repos/clean', () => ({
@@ -24,13 +26,13 @@ describe('retrieve service', () => {
 
   test('should retrieve file from clean storage', async () => {
     const path = 'clean/file/path'
-    const mockFile = { name: 'file.pdf' }
-    cleanRepo.getObject.mockResolvedValue(mockFile)
+    const data = pdf
+    cleanRepo.getObject.mockResolvedValue(data)
 
     const [file, err] = await handleFileRetrieval(path)
 
     expect(cleanRepo.getObject).toHaveBeenCalledWith(path)
-    expect(file).toEqual(mockFile)
+    expect(file).toEqual(data)
     expect(err).toBeNull()
   })
 
