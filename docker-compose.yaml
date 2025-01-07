@@ -4,6 +4,8 @@ services:
       context: .
       target: production
     image: fcp-fd-file-retriever
+    depends_on:
+      - fcp-fd-file-retriever-azurite
     container_name: fcp-fd-file-retriever
     environment:
       APPINSIGHTS_CLOUDROLE: fcp-fd-file-retriever-local

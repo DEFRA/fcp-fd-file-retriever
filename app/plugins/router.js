@@ -1,5 +1,5 @@
 import health from '../routes/health.js'
-import retrieve from '../routes/retrieve.js'
+import retrieve from '../routes/objects.js'
 
 const router = {
   plugin: {
