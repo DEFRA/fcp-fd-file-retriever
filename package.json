@@ -1,6 +1,6 @@
 {
   "name": "fcp-fd-file-retriever",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "File retrieval service for Single Front Door",
   "homepage": "https://github.com/DEFRA/fcp-fd-file-retriever",
   "main": "app/index.js",
