@@ -22,14 +22,7 @@ const containers = {
   objects: client.getContainerClient(storage.get('container.objects'))
 }
 
-const createCleanContainers = async () => {
-  for (const container of Object.keys(containers)) {
-    await containers[container].createIfNotExists()
-  }
-}
-
 export {
   client,
-  containers,
-  createCleanContainers
+  containers
 }
