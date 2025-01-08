@@ -1,11 +1,9 @@
 import { beforeAll, describe, expect, jest, test } from '@jest/globals'
 
-import * as dmzStorage from '../../../../app/storage/blob/dmz.js'
 import * as cleanStorage from '../../../../app/storage/blob/clean.js'
 
 import { pdf } from '../../../mocks/files.js'
 
-const { containers: dmzContainers } = dmzStorage
 const { containers: cleanContainers } = cleanStorage
 
 const mockCleanBlob = jest.fn(async (path) => {
@@ -44,7 +42,6 @@ describe('objects retrieval endpoint', () => {
     server = await createServer()
     await server.initialize()
 
-    await dmzStorage.createDmzContainers()
     await cleanStorage.createCleanContainers()
   })
 
@@ -72,7 +69,6 @@ describe('objects retrieval endpoint', () => {
   })
 
   afterEach(async () => {
-    await dmzContainers.objects.deleteIfExists()
     await cleanContainers.objects.deleteIfExists()
     await server.stop()
   })
