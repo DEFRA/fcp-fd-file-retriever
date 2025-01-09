@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, jest, test } from '@jest/globals'
+import { v4 as uuidv4 } from 'uuid'
 
 import * as cleanStorage from '../../../../app/storage/blob/clean.js'
 
@@ -6,8 +7,8 @@ import { pdf } from '../../../mocks/files.js'
 
 const { containers: cleanContainers } = cleanStorage
 
-const mockCleanBlob = jest.fn(async (path) => {
-  const client = cleanContainers.objects.getBlockBlobClient(path)
+const mockCleanBlob = jest.fn(async (id) => {
+  const client = cleanContainers.objects.getBlockBlobClient(id)
   const buffer = pdf
 
   await client.uploadData(buffer, {
@@ -47,14 +48,14 @@ describe('objects retrieval endpoint', () => {
     await server.initialize()
   })
 
-  describe('GET /objects/{path}', () => {
+  describe('GET /objects/{id}', () => {
     test('should retrieve a file if it exists in clean storage', async () => {
-      const path = 'mock-file-id'
-      await mockCleanBlob(path)
+      const id = '24d1eb1d-1045-44be-9f08-1511701648e9'
+      await mockCleanBlob(id)
 
       const response = await server.inject({
         method: 'GET',
-        url: `/objects/${path}`
+        url: `/objects/${id}`
       })
 
       expect(response.statusCode).toBe(200)
@@ -63,22 +64,37 @@ describe('objects retrieval endpoint', () => {
     test('should return 404 if the file does not exist', async () => {
       const response = await server.inject({
         method: 'GET',
-        url: '/objects/non-existent-file'
+        url: '/objects/24d1eb1d-1045-44be-9f08-1511701648e9'
       })
 
       expect(response.statusCode).toBe(404)
     })
 
-    test('should throw generic error in all other case ', async () => {
-      const path = 'generic-error'
+    test('should throw 400 validation error when id not a UUID', async () => {
+      const id = 'invalid-id'
 
       const response = await server.inject({
         method: 'GET',
-        url: `/objects/${path}`
+        url: `/objects/${id}`
       })
 
-      console.log(response)
-      expect(response.statusCode).not.toBe(404)
+      expect(response.statusCode).toBe(400)
+    })
+
+    test('should throw generic error in all other cases', async () => {
+      const id = uuidv4()
+
+      try {
+        const response = await server.inject({
+          method: 'GET',
+          url: `/objects/${id}`
+        })
+
+        expect(response.statusCode).not.toBe(200)
+      } catch (err) {
+        expect(err.statusCode).not.toBe(400)
+        expect(err.statusCode).not.toBe(404)
+      }
     })
   })
 

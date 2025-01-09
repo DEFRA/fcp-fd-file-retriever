@@ -1,3 +1,5 @@
+import Joi from 'joi'
+
 import { handleObjectRetrieval } from '../services/retrieve.js'
 import { FILE_NOT_FOUND } from '../constants/file-errors.js'
 
@@ -23,6 +25,13 @@ const objects = {
     }
 
     return h.response(fileObject).code(200)
+  },
+  options: {
+    validate: {
+      params: Joi.object({
+        id: Joi.string().uuid({ version: 'uuidv4' }).required()
+      })
+    }
   }
 }
 
