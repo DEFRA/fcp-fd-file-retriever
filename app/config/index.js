@@ -1,5 +1,5 @@
-import storage from './storage.js'
+import storageConfig from './storage.js'
 
 export {
-  storage
+  storageConfig
 }
