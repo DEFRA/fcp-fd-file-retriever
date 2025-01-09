@@ -10,7 +10,7 @@ jest.unstable_mockModule('../../../app/repos/clean', () => ({
 
 const cleanRepo = await import('../../../app/repos/clean.js')
 
-const { handleFileRetrieval } = await import('../../../app/services/retrieve.js')
+const { handleObjectRetrieval } = await import('../../../app/services/retrieve.js')
 
 describe('retrieve service', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('retrieve service', () => {
     const data = pdf
     cleanRepo.getObject.mockResolvedValue(data)
 
-    const [file, err] = await handleFileRetrieval(path)
+    const [file, err] = await handleObjectRetrieval(path)
 
     expect(cleanRepo.getObject).toHaveBeenCalledWith(path)
     expect(file).toEqual(data)
@@ -34,7 +34,7 @@ describe('retrieve service', () => {
     const mockError = new Error('Some error')
     cleanRepo.getObject.mockRejectedValue(mockError)
 
-    const [file, err] = await handleFileRetrieval(path)
+    const [file, err] = await handleObjectRetrieval(path)
 
     expect(cleanRepo.getObject).toHaveBeenCalledWith(path)
     expect(file).toBeNull()

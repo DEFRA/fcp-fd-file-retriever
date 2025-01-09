@@ -1,17 +1,17 @@
 import * as cleanRepo from '../repos/clean.js'
 
-const handleFileRetrieval = async (path) => {
-  let file
+const handleObjectRetrieval = async (id) => {
+  let fileObject
 
   try {
-    file = await cleanRepo.getObject(path)
-    console.log(`File ${path} retrieved from clean storage.`)
-    return [file, null]
+    fileObject = await cleanRepo.getObject(id)
+    console.log(`File ${id} retrieved from clean storage.`)
+    return [fileObject, null]
   } catch (err) {
     return [null, err]
   }
 }
 
 export {
-  handleFileRetrieval
+  handleObjectRetrieval
 }

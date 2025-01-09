@@ -1,4 +1,4 @@
-import { handleFileRetrieval } from '../services/retrieve.js'
+import { handleObjectRetrieval } from '../services/retrieve.js'
 import { FILE_NOT_FOUND } from '../constants/file-errors.js'
 
 const handleRetrievalError = (err, h) => {
@@ -12,17 +12,17 @@ const handleRetrievalError = (err, h) => {
 
 const objects = {
   method: 'GET',
-  path: '/objects/{path}',
+  path: '/objects/{id}',
   handler: async (request, h) => {
-    const { path } = request.params
+    const { id } = request.params
 
-    const [file, err] = await handleFileRetrieval(path)
+    const [fileObject, err] = await handleObjectRetrieval(id)
 
     if (err) {
       return handleRetrievalError(err, h)
     }
 
-    return h.response(file).code(200)
+    return h.response(fileObject).code(200)
   }
 }
 
