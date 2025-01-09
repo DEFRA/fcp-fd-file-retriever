@@ -33,16 +33,18 @@ jest.setTimeout(30000)
 describe('objects retrieval endpoint', () => {
   let server
 
-  beforeAll(() => {
+  beforeAll(async () => {
     jest.resetModules()
     jest.clearAllMocks()
+
+    for (const container of Object.keys(cleanContainers)) {
+      await cleanContainers[container].createIfNotExists()
+    }
   })
 
   beforeEach(async () => {
     server = await createServer()
     await server.initialize()
-
-    await cleanStorage.createCleanContainers()
   })
 
   describe('GET /objects/{path}', () => {
@@ -65,6 +67,18 @@ describe('objects retrieval endpoint', () => {
       })
 
       expect(response.statusCode).toBe(404)
+    })
+
+    test('should throw generic error in all other case ', async () => {
+      const path = 'generic-error'
+
+      const response = await server.inject({
+        method: 'GET',
+        url: `/objects/${path}`
+      })
+
+      console.log(response)
+      expect(response.statusCode).not.toBe(404)
     })
   })
 
