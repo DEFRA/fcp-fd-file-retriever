@@ -1,5 +1,4 @@
 import { beforeAll, describe, expect, jest, test } from '@jest/globals'
-import { v4 as uuidv4 } from 'uuid'
 
 import * as cleanStorage from '../../../../app/storage/blob/clean.js'
 
@@ -81,20 +80,22 @@ describe('objects retrieval endpoint', () => {
       expect(response.statusCode).toBe(400)
     })
 
-    test('should throw generic error in all other cases', async () => {
-      const id = uuidv4()
+    test('should throw generic error in other cases', async () => {
+      const id = '24d1eb1d-1045-44be-9f08-1511701648e9'
+      const mockError = new Error('Some error')
 
-      try {
-        const response = await server.inject({
-          method: 'GET',
-          url: `/objects/${id}`
-        })
+      jest.spyOn(cleanContainers.objects, 'getBlockBlobClient').mockImplementation(() => {
+        throw mockError
+      })
 
-        expect(response.statusCode).not.toBe(200)
-      } catch (err) {
-        expect(err.statusCode).not.toBe(400)
-        expect(err.statusCode).not.toBe(404)
-      }
+      const response = await server.inject({
+        method: 'GET',
+        url: `/objects/${id}`
+      })
+
+      expect(response.statusCode).not.toBe(200)
+      expect(response.statusCode).not.toBe(400)
+      expect(response.statusCode).not.toBe(404)
     })
   })
 
