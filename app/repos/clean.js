@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import { containers } from '../storage/blob/clean.js'
 import { FILE_NOT_FOUND } from '../constants/file-errors.js'
 
@@ -8,7 +9,7 @@ const getObject = async (path) => {
   try {
     return await blob.downloadToBuffer()
   } catch (err) {
-    if (err.statusCode === 404) {
+    if (err.statusCode === StatusCodes.NOT_FOUND) {
       const error = new Error('Requested file not found')
       error.cause = FILE_NOT_FOUND
       throw error

@@ -26,6 +26,7 @@
     "convict": "6.2.4",
     "convict-format-with-validator": "6.2.0",
     "hapi-pino": "12.1.0",
+    "http-status-codes": "^2.3.0",
     "joi": "17.13.3",
     "log-timestamp": "0.3.0"
   },
