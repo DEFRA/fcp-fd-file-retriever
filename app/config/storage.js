@@ -19,35 +19,6 @@ const storage = convict({
     default: null,
     env: 'MANAGED_IDENTITY_CLIENT_ID'
   },
-  dmz: {
-    accountName: {
-      doc: 'DMZ Azure Storage Account Name',
-      format: String,
-      default: null,
-      env: 'DMZ_STORAGE_ACCOUNT_NAME'
-    },
-    accessKey: {
-      doc: 'DMZ Azure Storage Account Access Key - Should only be used in local development',
-      format: String,
-      nullable: true,
-      default: null,
-      env: process.env.USE_AZURITE === 'true'
-        ? 'AZURITE_ACCESS_KEY'
-        : 'DMZ_STORAGE_ACCESS_KEY'
-    },
-    avScanPollingInterval: {
-      doc: 'AV Scan Polling Interval in milliseconds',
-      format: Number,
-      default: 5000,
-      env: 'AV_SCAN_POLLING_INTERVAL'
-    },
-    avScanMaxAttempts: {
-      doc: 'AV Scan Max Attempts',
-      format: Number,
-      default: 10,
-      env: 'AV_SCAN_MAX_ATTEMPTS'
-    }
-  },
   clean: {
     accountName: {
       doc: 'Clean Azure Storage Account Name',
@@ -63,23 +34,6 @@ const storage = convict({
       env: process.env.USE_AZURITE === 'true'
         ? 'AZURITE_ACCESS_KEY'
         : 'CLN_STORAGE_ACCESS_KEY'
-    }
-  },
-  malicious: {
-    accountName: {
-      doc: 'Malicious Azure Storage Account Name',
-      format: String,
-      default: null,
-      env: 'MAL_STORAGE_ACCOUNT_NAME'
-    },
-    accessKey: {
-      doc: 'Malicious Azure Storage Account Access Key - Should only be used in local development',
-      format: String,
-      nullable: true,
-      default: null,
-      env: process.env.USE_AZURITE === 'true'
-        ? 'AZURITE_ACCESS_KEY'
-        : 'MAL_STORAGE_ACCESS_KEY'
     }
   },
   container: {

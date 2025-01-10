@@ -22,12 +22,10 @@ services:
       AV_SCAN_POLLING_INTERVAL: 50
       USE_AZURITE: true
       AZURITE_ACCESS_KEY: "test"
-      DMZ_STORAGE_ACCOUNT_NAME: "dmz"
       CLN_STORAGE_ACCOUNT_NAME: "cln"
-      MAL_STORAGE_ACCOUNT_NAME: "mal"
 
   fcp-fd-file-retriever-azurite:
     container_name: fcp-fd-file-retriever-azurite-test
     environment:
       AZURITE_ACCOUNTS: >
-        dmz:test;cln:test;mal:test
+        cln:test

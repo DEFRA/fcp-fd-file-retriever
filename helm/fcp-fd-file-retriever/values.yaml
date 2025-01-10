@@ -24,9 +24,7 @@ port: &port 3042
 container:
   resourceTier: M
   port: *port
-  dmzStorageAccountName:
   clnStorageAccountName:
-  malStorageAccountName:
   avScanPollingInterval: 5000
   avScanMaxAttempts: 10
 

@@ -1,5 +1,5 @@
 import health from '../routes/health.js'
-import retrieve from '../routes/objects.js'
+import objects from '../routes/objects.js'
 
 const router = {
   plugin: {
@@ -7,7 +7,7 @@ const router = {
     register: (server, _options) => {
       server.route([].concat(
         health,
-        retrieve
+        objects
       ))
     }
   }

@@ -23,12 +23,8 @@ services:
       AZURITE_BLOB_PORT: ${AZURITE_BLOB_PORT:-10000}
       AZURITE_ACCESS_KEY: ${AZURITE_ACCESS_KEY:-test}
       OBJECTS_CONTAINER_NAME: objects-${MESSAGE_DEV_SUFFIX}
-      DMZ_STORAGE_ACCOUNT_NAME: ${DMZ_STORAGE_ACCOUNT_NAME:-dmz}
-      DMZ_STORAGE_ACCESS_KEY: ${DMZ_STORAGE_ACCESS_KEY:-test}
       CLN_STORAGE_ACCOUNT_NAME: ${CLN_STORAGE_ACCOUNT_NAME:-cln}
       CLN_STORAGE_ACCESS_KEY: ${CLN_STORAGE_ACCESS_KEY:-test}
-      MAL_STORAGE_ACCOUNT_NAME: ${MAL_STORAGE_ACCOUNT_NAME:-mal}
-      MAL_STORAGE_ACCESS_KEY: ${MAL_STORAGE_ACCESS_KEY:-test}
 
   fcp-fd-file-retriever-azurite:
     container_name: fcp-fd-file-retriever-azurite-development
@@ -36,7 +32,7 @@ services:
       - fcp-fd-file-retriever
     environment:
       AZURITE_ACCOUNTS: >
-        ${DMZ_STORAGE_ACCOUNT_NAME:-dmz}:${AZURITE_ACCESS_KEY:-test};${CLN_STORAGE_ACCOUNT_NAME:-cln}:${AZURITE_ACCESS_KEY:-test};${MAL_STORAGE_ACCOUNT_NAME:-mal}:${AZURITE_ACCESS_KEY:-test}
+        ${CLN_STORAGE_ACCOUNT_NAME:-cln}:${AZURITE_ACCESS_KEY:-test}
     volumes:
       - azurite_data:/data
 
