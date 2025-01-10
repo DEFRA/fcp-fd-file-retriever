@@ -6,14 +6,14 @@ info:
   description: Handles file retrieval for the fcp-fd-file-retriever microservice.
 
 paths: 
-  /object/{path}:
+  /object/{id}:
     get:
       tags:
         - Object
       summary: Retrieve a file
-      description: Accepts file retrieval requests via HTTP using path parameters.
+      description: Accepts file retrieval requests via HTTP using id parameter.
       parameters:
-        - name: path
+        - name: id
           in: path
           required: true
           schema:
@@ -48,16 +48,6 @@ paths:
                       type: string
                       example:
                         - Property 'path' is required.
-        '403':
-          description: AV scan failed.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "AV scan failed."
         '404':
           description: File not found.
           content:
@@ -68,3 +58,13 @@ paths:
                   message:
                     type: string
                     example: "File not found."
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "An unexpected error occurred."
