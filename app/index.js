@@ -1,5 +1,6 @@
 import { setup } from './insights.js'
 import 'log-timestamp'
+
 import { createServer } from './server.js'
 
 const init = async () => {

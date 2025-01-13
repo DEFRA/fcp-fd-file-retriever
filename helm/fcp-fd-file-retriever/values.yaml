@@ -24,6 +24,9 @@ port: &port 3042
 container:
   resourceTier: M
   port: *port
+  clnStorageAccountName:
+  avScanPollingInterval: 5000
+  avScanMaxAttempts: 10
 
 livenessProbe:
   path: /healthz
@@ -46,3 +49,8 @@ usePodIdentity: true
 azureIdentity:
   clientID: not-a-real-clientID
   resourceID: not-a-real-resourceID
+
+ingress:
+  class: nginx
+  endpoint: fcp-fd-file-retriever
+  server:

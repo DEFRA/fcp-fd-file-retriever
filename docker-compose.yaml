@@ -4,7 +4,17 @@ services:
       context: .
       target: production
     image: fcp-fd-file-retriever
+    depends_on:
+      - fcp-fd-file-retriever-azurite
     container_name: fcp-fd-file-retriever
     environment:
       APPINSIGHTS_CLOUDROLE: fcp-fd-file-retriever-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+
+  fcp-fd-file-retriever-azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.33.0
+    container_name: fcp-fd-file-retriever-azurite
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
