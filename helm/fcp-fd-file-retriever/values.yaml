@@ -49,3 +49,8 @@ usePodIdentity: true
 azureIdentity:
   clientID: not-a-real-clientID
   resourceID: not-a-real-resourceID
+
+ingress:
+  class: nginx
+  endpoint: fcp-fd-file-retriever
+  server:
