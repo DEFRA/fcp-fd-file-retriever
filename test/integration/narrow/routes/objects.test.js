@@ -93,9 +93,7 @@ describe('objects retrieval endpoint', () => {
         url: `/objects/${id}`
       })
 
-      expect(response.statusCode).not.toBe(200)
-      expect(response.statusCode).not.toBe(400)
-      expect(response.statusCode).not.toBe(404)
+      expect(response.statusCode).toBe(500)
     })
   })
 
