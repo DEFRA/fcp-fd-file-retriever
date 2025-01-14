@@ -17,7 +17,7 @@ const client = new BlobServiceClient(
   endpoint,
   credential
 )
-
+console.log('endpoint', endpoint)
 const containers = {
   objects: client.getContainerClient(storageConfig.get('container.objects'))
 }
