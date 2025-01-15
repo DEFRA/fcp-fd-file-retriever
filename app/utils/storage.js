@@ -1,5 +1,5 @@
 import { StorageSharedKeyCredential } from '@azure/storage-blob'
-import { DefaultAzureCredential } from '@azure/identity'
+import { ManagedIdentityCredential } from '@azure/identity'
 
 import { storageConfig } from '../config/index.js'
 
@@ -19,7 +19,7 @@ const getStorageCredential = (accountName, accessKey) => {
 
   console.log('Using Azure Identity Credential for account:', accountName)
 
-  return new DefaultAzureCredential({ managedIdentityClientId: storageConfig.get('managedIdentityClientId') })
+  return new ManagedIdentityCredential({ clientId: storageConfig.get('managedIdentityClientId') })
 }
 
 export {
