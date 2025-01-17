@@ -44,11 +44,15 @@ readinessProbe:
   failureThreshold: 3
   timeoutSeconds: 5
 
-usePodIdentity: true
+workloadIdentity: true
 
 azureIdentity:
   clientID: not-a-real-clientID
   resourceID: not-a-real-resourceID
+
+service:
+  port: 80
+  type: ClusterIP
 
 ingress:
   class: nginx
