@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 const mockSharedKeyCredential = jest.fn()
-const mockWorkloadIdentityCredential = jest.fn()
+const mockDefaultAzureCredential = jest.fn()
 
 const mockCreateIfNotExists = jest.fn()
 
@@ -17,7 +17,7 @@ jest.unstable_mockModule('@azure/storage-blob', () => ({
 }))
 
 jest.unstable_mockModule('@azure/identity', () => ({
-  WorkloadIdentityCredential: mockWorkloadIdentityCredential
+  DefaultAzureCredential: mockDefaultAzureCredential
 }))
 
 describe('Clean Blob Storage Client', () => {
@@ -53,7 +53,7 @@ describe('Clean Blob Storage Client', () => {
 
       expect(client).toBeDefined()
       expect(mockSharedKeyCredential).toHaveBeenCalled()
-      expect(mockWorkloadIdentityCredential).not.toHaveBeenCalled()
+      expect(mockDefaultAzureCredential).not.toHaveBeenCalled()
 
       process.env = orginalEnv
     })
@@ -70,7 +70,7 @@ describe('Clean Blob Storage Client', () => {
       const { client } = await import('../../../../app/storage/blob/clean')
 
       expect(client).toBeDefined()
-      expect(mockWorkloadIdentityCredential).toHaveBeenCalled()
+      expect(mockDefaultAzureCredential).toHaveBeenCalled()
       expect(mockSharedKeyCredential).not.toHaveBeenCalled()
 
       process.env = orginalEnv
