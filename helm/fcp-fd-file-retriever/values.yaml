@@ -25,6 +25,7 @@ container:
   resourceTier: M
   port: *port
   clnStorageAccountName:
+  clnStorageAccessKey:
   avScanPollingInterval: 5000
   avScanMaxAttempts: 10
 
