@@ -15,7 +15,12 @@
     "start:debug": "nodemon --inspect-brk=0.0.0.0 --ext js --legacy-watch app/index.js"
   },
   "author": "Defra",
-  "contributors": [],
+  "contributors": [
+    "Simon Dunn <simon.dunn1@defra.gov.uk>",
+    "Shaun Fitsimons <shaun.fitzsimmons@defra.gov.uk>",
+    "Adam Kay <adam.kay@defra.gov.uk>",
+    "Rana Salem <rana.salem@defra.gov.uk>"
+  ],
   "license": "OGL-UK-3.0",
   "dependencies": {
     "@azure/identity": "4.5.0",
