@@ -1,16 +1,7 @@
 import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
-
 import { handleObjectRetrieval } from '../services/retrieve.js'
-import { FILE_NOT_FOUND } from '../constants/file-errors.js'
-
-const handleRetrievalError = (err, h) => {
-  if (err?.cause === FILE_NOT_FOUND) {
-    return h.response().code(StatusCodes.NOT_FOUND)
-  } else {
-    throw err
-  }
-}
+import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
 
 const objects = {
   method: 'GET',
