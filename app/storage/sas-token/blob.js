@@ -1,27 +1,27 @@
 import { BlobSASPermissions, generateBlobSASQueryParameters, SASProtocol } from '@azure/storage-blob'
 import { storageConfig } from '../../config/index.js'
 import { client } from '../blob/clean.js'
-import sasTimeConstraints from '../../constants/sas-time-constraints.js'
+import sasPolicy from '../../constants/sas-policy.js'
 
 const createBlobSasToken = async (blobPath) => {
   const accountName = storageConfig.get('clean.accountName')
   const containerName = storageConfig.get('container.objects')
 
   const NOW = new Date()
-  const sasStartTime = new Date(NOW.valueOf() - sasTimeConstraints.SAS_START_INTERVAL)
-  const sasTimeLimit = new Date(NOW.valueOf() + sasTimeConstraints.SAS_TIME_LIMIT)
+  const sasStartTime = new Date(NOW.valueOf() - sasPolicy.SAS_START_INTERVAL)
+  const sasTimeLimit = new Date(NOW.valueOf() + sasPolicy.SAS_TIME_LIMIT)
 
   const userDelegationKey = await client.getUserDelegationKey(
     sasStartTime,
     sasTimeLimit
   )
 
-  const blobSasPermissionsForInternalUser = 'r'
+  const blobSasPermissionsInternalUser = sasPolicy.BLOB_SAS_PERMISSIONS_INTERNAL_USER
 
   const sasOptions = {
     blobPath,
     containerName,
-    permissions: BlobSASPermissions.parse(blobSasPermissionsForInternalUser),
+    permissions: BlobSASPermissions.parse(blobSasPermissionsInternalUser),
     protocol: SASProtocol.HttpsAndHttp,
     startsOn: sasStartTime,
     expiresOn: sasTimeLimit
