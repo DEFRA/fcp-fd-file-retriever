@@ -2,7 +2,6 @@ import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import { handleObjectRetrieval } from '../services/retrieve.js'
 import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
-// import { createBlobSasToken } from '../storage/sas-token/blob'
 
 const internalObjects = {
   method: 'GET',
