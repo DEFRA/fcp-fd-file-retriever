@@ -33,6 +33,7 @@ const createBlobSasToken = async (blobPath) => {
     accountName
   ).toString()
 
+  console.log(`User delegation blob SAS token: ${sasToken}`)
   return sasToken
 }
 
