@@ -5,7 +5,7 @@ import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
 
 const objects = {
   method: 'GET',
-  path: '/objects/{id}',
+  path: '/objects/{path}',
   options: {
     validate: {
       params: Joi.object({
@@ -14,9 +14,9 @@ const objects = {
     }
   },
   handler: async (request, h) => {
-    const { id } = request.params
+    const { path } = request.params
 
-    const [fileObject, err] = await handleObjectRetrieval(id)
+    const [fileObject, err] = await handleObjectRetrieval(path)
 
     if (err) {
       return handleRetrievalError(err, h)
