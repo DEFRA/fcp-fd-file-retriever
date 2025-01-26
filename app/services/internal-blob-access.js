@@ -2,13 +2,13 @@ import { BlobClient } from '@azure/storage-blob'
 import { storageConfig } from '../config/index.js'
 import { createBlobSasToken } from '../storage/sas-token/blob.js'
 
-const internalBlobAccess = async (blobPath) => {
+const internalBlobAccess = async (blobId) => {
   const accountName = storageConfig.get('clean.accountName')
   const containerName = storageConfig.get('container.objects')
 
-  const sasToken = await createBlobSasToken(blobPath)
+  const sasToken = await createBlobSasToken(blobId)
 
-  const sasUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobPath}?${sasToken}`
+  const sasUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobId}?${sasToken}`
   console.log('Generated SAS URL:', sasUrl)
 
   const blobClient = new BlobClient(sasUrl)

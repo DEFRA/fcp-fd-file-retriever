@@ -4,7 +4,7 @@ import { internalBlobAccess } from '../services/internal-blob-access.js'
 
 const internalObjectsBuffer = {
   method: 'GET',
-  path: '/internal/objects/buffer/{path}',
+  path: '/internal/objects/buffer/{id}',
   options: {
     validate: {
       params: Joi.object({
@@ -13,10 +13,10 @@ const internalObjectsBuffer = {
     }
   },
   handler: async (request, h) => {
-    const { path } = request.params
+    const { id } = request.params
 
     try {
-      const blobBuffer = await internalBlobAccess(path)
+      const blobBuffer = await internalBlobAccess(id)
 
       return h.response(blobBuffer).code(StatusCodes.OK)
     } catch (error) {

@@ -1,28 +1,28 @@
-// import Joi from 'joi'
-// // import { StatusCodes } from 'http-status-codes'
-// // import { handleObjectRetrieval } from '../services/retrieve.js'
-// // import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
+import Joi from 'joi'
+// import { StatusCodes } from 'http-status-codes'
+// import { handleObjectRetrieval } from '../services/retrieve.js'
+// import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
 
-// const internalObjectsLink = {
-//   method: 'GET',
-//   path: '/internal/objects/link/{path}',
-//   options: {
-//     validate: {
-//       params: Joi.object({
-//         id: Joi.string().uuid({ version: 'uuidv4' }).required()
-//       })
-//     }
-//   },
-//   handler: async (request, h) => {
-//     // const { path } = request.params
+const internalObjectsLink = {
+  method: 'GET',
+  path: '/internal/objects/link/{id}',
+  options: {
+    validate: {
+      params: Joi.object({
+        id: Joi.string().uuid({ version: 'uuidv4' }).required()
+      })
+    }
+  },
+  handler: async (request, h) => {
+    // const { path } = request.params
 
-//     // const [fileObject, err] = await handleObjectRetrieval(path)
+    // const [fileObject, err] = await handleObjectRetrieval(path)
 
-//     // if (err) {
-//     //   return handleRetrievalError(err, h)
-//     // }
-//     // return h.response(fileObject).code(StatusCodes.OK)
-//   }
-// }
+    // if (err) {
+    //   return handleRetrievalError(err, h)
+    // }
+    // return h.response(fileObject).code(StatusCodes.OK)
+  }
+}
 
-// export default internalObjectsLink
+export default internalObjectsLink

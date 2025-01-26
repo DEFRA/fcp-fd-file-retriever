@@ -3,7 +3,7 @@ import { storageConfig } from '../../config/index.js'
 import { client } from '../blob/clean.js'
 import sasPolicy from '../../constants/sas-policy.js'
 
-const createBlobSasToken = async (blobPath) => {
+const createBlobSasToken = async (blobId) => {
   const accountName = storageConfig.get('clean.accountName')
   const containerName = storageConfig.get('container.objects')
 
@@ -19,7 +19,7 @@ const createBlobSasToken = async (blobPath) => {
   const blobSasPermissionsInternalUser = sasPolicy.BLOB_SAS_PERMISSIONS_INTERNAL_USER
 
   const sasOptions = {
-    blobPath,
+    blobId,
     containerName,
     permissions: BlobSASPermissions.parse(blobSasPermissionsInternalUser),
     protocol: SASProtocol.HttpsAndHttp,
