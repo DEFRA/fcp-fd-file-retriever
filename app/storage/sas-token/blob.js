@@ -16,12 +16,10 @@ const createBlobSasToken = async (blobId) => {
     sasTimeLimit
   )
 
-  const blobSasPermissionsInternalUser = sasPolicy.BLOB_SAS_PERMISSIONS_INTERNAL_USER
-
   const sasOptions = {
-    blobId,
+    blobName: blobId,
     containerName,
-    permissions: BlobSASPermissions.parse(blobSasPermissionsInternalUser),
+    permissions: BlobSASPermissions.parse(sasPolicy.BLOB_SAS_PERMISSIONS_INTERNAL_USER),
     protocol: SASProtocol.HttpsAndHttp,
     startsOn: sasStartTime,
     expiresOn: sasTimeLimit
