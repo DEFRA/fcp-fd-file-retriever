@@ -1,7 +1,7 @@
 import Joi from 'joi'
-// import { StatusCodes } from 'http-status-codes'
-// import { handleObjectRetrieval } from '../services/retrieve.js'
-// import { handleRetrievalError } from '../storage/blob/handle-retrieval-error.js'
+import { StatusCodes } from 'http-status-codes'
+import { containers, sharedKeyCredential } from '../storage/blob/clean.js'
+import { createServiceBlobSasToken } from '../storage/sas-token/blob.js'
 
 const internalObjectsLink = {
   method: 'GET',
@@ -14,14 +14,16 @@ const internalObjectsLink = {
     }
   },
   handler: async (request, h) => {
-    // const { path } = request.params
+    const { id } = request.params
+    const containerClient = containers.objects
 
-    // const [fileObject, err] = await handleObjectRetrieval(path)
-
-    // if (err) {
-    //   return handleRetrievalError(err, h)
-    // }
-    // return h.response(fileObject).code(StatusCodes.OK)
+    try {
+      const blobBuffer = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
+      return h.response(blobBuffer).code(StatusCodes.OK)
+    } catch (error) {
+      console.error('Error retrieving blob:', error)
+      return h.response({ error: 'Failed to retrieve blob' }).code(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
   }
 }
 
