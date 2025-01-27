@@ -16,9 +16,17 @@ const internalObjects = {
   handler: async (request, h) => {
     const { id } = request.params
     const containerClient = containers.objects
+    const blobClient = containerClient.getBlobClient(id)
 
     try {
+      const blobExists = await blobClient.exists()
+
+      if (!blobExists) {
+        return h.response({ error: 'Blob not found' }).code(StatusCodes.NOT_FOUND)
+      }
+
       const blob = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
+
       return h.response(blob).code(StatusCodes.OK)
     } catch (error) {
       console.error('Error retrieving blob:', error)

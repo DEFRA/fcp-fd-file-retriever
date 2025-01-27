@@ -22,7 +22,7 @@ paths:
           description: The UUID of the file to be retrieved.
       responses:
         '200':
-          description: File retrieved successfully
+          description: File retrieved successfully.
           content:
             application/json:
               schema:
@@ -74,7 +74,7 @@ paths:
       tags:
         - Internal
       summary: Retrieve a file (internal users)
-      description: Request temporary direct access via Service SAS (Shared Access Signature) to a blob in SFD's clean storage container
+      description: Request temporary direct access via Service SAS (Shared Access Signature) to an individual blob in the Single Front Door's clean storage container
       parameters:
         - name: id
           in: path
@@ -85,16 +85,34 @@ paths:
           description: The name (UUID) of the blob to be retrieved
       responses:
         '200':
-          description: SAS token successfully generated & temporary blob access granted
+          description: SAS token successfully generated & temporary access to blob granted.
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: url
+                description: Temporary direct access link to the retrieved blob
+                example: "https://<storage-account-name>.blob.core.windows.net/<storage-container-name>/<blob-name>?<sas-token>"
+        '400':
+          description: Blob retrieval request is invalid.
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  path: 
+                  message:
                     type: string
-                    format: url
-                    description: Temporary direct access link to the retrieved blob
+                    example: "Invalid request params input"
+        '404':
+          description: Blob not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Blob not found"
         '500':
           description: Internal server error.
           content:
@@ -104,4 +122,4 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: "An unexpected error occurred."
+                    example: "An unexpected error occurred"
