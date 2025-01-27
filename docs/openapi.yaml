@@ -6,7 +6,7 @@ info:
   description: Handles file retrieval for the fcp-fd-file-retriever microservice.
 
 paths: 
-  /object/{id}:
+  /objects/{id}:
     get:
       tags:
         - Object
@@ -68,3 +68,18 @@ paths:
                   message:
                     type: string
                     example: "An unexpected error occurred."
+
+  /internal/objects/{id}:
+    get:
+      tags:
+        - Internal
+      summary: Retrieve a file (internal users)
+      description: Request temporary direct access via Service SAS (Shared Access Signature) to a blob in SFD's clean storage container
+      parameters:
+        - name: id
+        - in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The name (UUID) of the blob to be retrieved
