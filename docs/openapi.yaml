@@ -77,9 +77,31 @@ paths:
       description: Request temporary direct access via Service SAS (Shared Access Signature) to a blob in SFD's clean storage container
       parameters:
         - name: id
-        - in: path
+          in: path
           required: true
           schema:
             type: string
             format: uuid
           description: The name (UUID) of the blob to be retrieved
+      responses:
+        '200':
+          description: SAS token successfully generated & temporary blob access granted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  path: 
+                    type: string
+                    format: url
+                    description: Temporary direct access link to the retrieved blob
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "An unexpected error occurred."
