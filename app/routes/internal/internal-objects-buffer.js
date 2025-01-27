@@ -15,20 +15,26 @@ const internalObjectsBuffer = {
   },
   handler: async (request, h) => {
     const { id } = request.params
+    const containerClient = containers.objects
 
     try {
-      const containerClient = containers.objects
-      const sasUrl = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
-      const response = await fetch(sasUrl)
-      const buffer = await response.arrayBuffer()
+      const blobUrl = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
 
-      return h.response(Buffer.from(buffer))
-        .header('Content-Type', response.headers.get('Content-Type') || 'application/octet-stream')
-        .header('Content-Length', buffer.byteLength)
+      const response = await fetch(blobUrl)
+      if (!response.ok) {
+        console.error(`Failed to fetch blob. Status: ${response.status}`)
+        throw new Error(`Failed to fetch blob. Status: ${response.status}`)
+      }
+
+      const blobBuffer = await response.buffer()
+
+      return h.response(blobBuffer)
+        .header('Content-Type', response.headers.get('content-type') || 'application/octet-stream')
+        .header('Content-Disposition', `attachment; filename="${id}"`)
         .code(StatusCodes.OK)
     } catch (error) {
-      console.error('Error retrieving blob:', error)
-      return h.response({ error: 'Failed to retrieve blob' }).code(StatusCodes.INTERNAL_SERVER_ERROR)
+      console.error('Error retrieving blob:', error.message)
+      return h.response({ error: 'Failed to retrieve blob content' }).code(StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
 }

@@ -5,21 +5,31 @@ import sasPolicy from '../../constants/sas-policy.js'
 
 const accountName = storageConfig.get('clean.accountName')
 const containerName = storageConfig.get('container.objects')
-const NOW = new Date()
 
 const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential, storedPolicyName) => {
   const sasOptions = {
-    containerName,
+    containerName: containerClient.containerName,
     blobName: blobId
   }
 
+  const CURRENT_TIME = new Date()
+
   if (storedPolicyName == null) {
-    sasOptions.startsOn = new Date(NOW.valueOf() - sasPolicy.SAS_START_INTERVAL)
-    sasOptions.expiresOn = new Date(NOW.valueOf() + sasPolicy.SAS_TIME_LIMIT)
+    sasOptions.startsOn = new Date(CURRENT_TIME.valueOf() - sasPolicy.SAS_START_INTERVAL)
+    sasOptions.expiresOn = new Date(CURRENT_TIME.valueOf() + sasPolicy.SAS_TIME_LIMIT)
     sasOptions.permissions = BlobSASPermissions.parse(sasPolicy.BLOB_SAS_PERMISSIONS_INTERNAL_USER)
   } else {
     sasOptions.identifier = storedPolicyName
   }
+
+  // Temporary log for context/to confirm SAS Options are correctly set
+  console.log(`SAS Options: ${JSON.stringify({
+    containerName: sasOptions.containerName,
+    blobName: sasOptions.blobName,
+    startsOn: sasOptions.startsOn,
+    expiresOn: sasOptions.expiresOn,
+    permissions: sasOptions.permissions
+  }, null, 2)}`)
 
   const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString()
 
@@ -27,8 +37,9 @@ const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential,
 }
 
 const createUserDelegationBlobSasToken = async (blobId) => {
-  const sasStartTime = new Date(NOW.valueOf() - sasPolicy.SAS_START_INTERVAL)
-  const sasTimeLimit = new Date(NOW.valueOf() + sasPolicy.SAS_TIME_LIMIT)
+  const CURRENT_TIME = new Date()
+  const sasStartTime = new Date(CURRENT_TIME.valueOf() - sasPolicy.SAS_START_INTERVAL)
+  const sasTimeLimit = new Date(CURRENT_TIME.valueOf() + sasPolicy.SAS_TIME_LIMIT)
 
   const userDelegationKey = await client.getUserDelegationKey(
     sasStartTime,

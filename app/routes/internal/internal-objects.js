@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes'
 import { containers, sharedKeyCredential } from '../../storage/blob/clean.js'
 import { createServiceBlobSasToken } from '../../storage/sas-token/blob.js'
 
-const internalObjectsLink = {
+const internalObjects = {
   method: 'GET',
-  path: '/internal/objects/link/{id}',
+  path: '/internal/objects/{id}',
   options: {
     validate: {
       params: Joi.object({
@@ -18,8 +18,8 @@ const internalObjectsLink = {
     const containerClient = containers.objects
 
     try {
-      const blobBuffer = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
-      return h.response(blobBuffer).code(StatusCodes.OK)
+      const blob = createServiceBlobSasToken(containerClient, id, sharedKeyCredential)
+      return h.response(blob).code(StatusCodes.OK)
     } catch (error) {
       console.error('Error retrieving blob:', error)
       return h.response({ error: 'Failed to retrieve blob' }).code(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -27,4 +27,4 @@ const internalObjectsLink = {
   }
 }
 
-export default internalObjectsLink
+export default internalObjects
