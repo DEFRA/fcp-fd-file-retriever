@@ -22,7 +22,7 @@ const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential,
   }
 
   const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString()
-  console.log(`Service Blob SAS Token has been generated for Blob ${blobId}`)
+  console.log(`Service Blob SAS Token has been generated (${sasToken}) for Blob ${blobId}`)
 
   return `${containerClient.getBlobClient(blobId).url}?${encodeURIComponent(sasToken)}}`
 }
