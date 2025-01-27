@@ -33,6 +33,8 @@ const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential,
 
   const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString()
 
+  console.log(`Temporary access has been granted to blob ${blobId}`)
+
   return `${containerClient.getBlobClient(blobId).url}?${sasToken}}`
 }
 

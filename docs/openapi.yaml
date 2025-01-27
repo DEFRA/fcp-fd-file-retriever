@@ -87,7 +87,7 @@ paths:
         '200':
           description: SAS token successfully generated & temporary access to blob granted.
           content:
-            text/plain:
+            text/html:
               schema:
                 type: string
                 format: url
