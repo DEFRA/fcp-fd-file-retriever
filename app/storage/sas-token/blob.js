@@ -1,6 +1,6 @@
 import { BlobSASPermissions, generateBlobSASQueryParameters, SASProtocol } from '@azure/storage-blob'
 import { storageConfig } from '../../config/index.js'
-import { client, containers } from '../blob/clean.js'
+import { client } from '../blob/clean.js'
 import sasPolicy from '../../constants/sas-policy.js'
 
 const accountName = storageConfig.get('clean.accountName')
@@ -9,7 +9,7 @@ const NOW = new Date()
 
 const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential, storedPolicyName) => {
   const sasOptions = {
-    containerClient: containers.objects,
+    containerName,
     blobName: blobId
   }
 
@@ -22,9 +22,8 @@ const createServiceBlobSasToken = (containerClient, blobId, sharedKeyCredential,
   }
 
   const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString()
-  console.log(`Service Blob SAS Token has been generated (${sasToken}) for Blob ${blobId}`)
 
-  return `${containerClient.getBlobClient(blobId).url}?${encodeURIComponent(sasToken)}}`
+  return `${containerClient.getBlobClient(blobId).url}?${sasToken}}`
 }
 
 const createUserDelegationBlobSasToken = async (blobId) => {
@@ -51,7 +50,6 @@ const createUserDelegationBlobSasToken = async (blobId) => {
     accountName
   ).toString()
 
-  console.log(`User delegation blob SAS token: ${sasToken}`)
   return sasToken
 }
 

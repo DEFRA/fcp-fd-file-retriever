@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
-import { containers, sharedKeyCredential } from '../storage/blob/clean.js'
-import { createServiceBlobSasToken } from '../storage/sas-token/blob.js'
+import { containers, sharedKeyCredential } from '../../storage/blob/clean.js'
+import { createServiceBlobSasToken } from '../../storage/sas-token/blob.js'
 
 const internalObjectsBuffer = {
   method: 'GET',
