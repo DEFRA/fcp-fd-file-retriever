@@ -6,7 +6,7 @@ info:
   description: Handles file retrieval for the fcp-fd-file-retriever microservice.
 
 paths: 
-  /object/{id}:
+  /objects/{id}:
     get:
       tags:
         - Object
