@@ -1,5 +1,6 @@
 import health from '../routes/health.js'
 import objects from '../routes/objects.js'
+import internalObjects from '../routes/internal/internal-objects.js'
 
 const router = {
   plugin: {
@@ -7,7 +8,8 @@ const router = {
     register: (server, _options) => {
       server.route([].concat(
         health,
-        objects
+        objects,
+        internalObjects
       ))
     }
   }
